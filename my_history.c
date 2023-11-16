@@ -7,6 +7,7 @@
  * Return: allocated string
  */
 
+
 char *func_get_history_file(info_t *info_struct)
 {
 	char *my_buffer, *dir;
