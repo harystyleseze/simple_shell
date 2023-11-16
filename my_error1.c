@@ -5,6 +5,7 @@
  * @conv_string: convertible string
  * Return: 0 if non-string, otherwise, -1
  */
+
 int my_erratoi_func(char *conv_string)
 {
 	int i = 0;
