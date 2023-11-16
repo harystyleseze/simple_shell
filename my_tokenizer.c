@@ -4,6 +4,7 @@
  * **strtow_func - splits a string into words. Repeat delimiters are ignored
  * @_str: the input_par string
  * @d: the delimeter string
+ *
  * Return: a pointer to an array of strings, or NULL on failure
  */
 
