@@ -6,6 +6,7 @@
  *
  * Return: Nothing
  */
+
 void my_eputs_func(char *_str)
 {
 	int i = 0;
