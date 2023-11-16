@@ -4,6 +4,7 @@
  * my_exit_func - function to exit the shell
  * @info_struct: Argument struct
  * Return: 0 if successful
+ *
  * (0) if info_struct.argv[0] != "exit"
  */
 int my_exit_func(info_t *info_struct)
