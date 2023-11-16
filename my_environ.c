@@ -3,8 +3,10 @@
 /**
  * my_env_func - return current environment
  * @info_struct: struct parameter
+ *
  * Return: Always 0
  */
+
 int my_env_func(info_t *info_struct)
 {
 	print_list_str_func(info_struct->env);
