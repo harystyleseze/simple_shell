@@ -15,6 +15,7 @@ int interactive_func(info_t *info_struct)
  * is_delimiter_func - verify the delimiter
  * @is_character: check character
  * @delim: the delimiter
+ *
  * Return: 1 if successful, otherwise 0
  */
 int is_delimiter_func(char is_character, char *delim)

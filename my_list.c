@@ -8,6 +8,7 @@
  *
  * Return: list size
  */
+
 list_t *add_node_func(list_t **node_head, const char *_str, int num_par)
 {
 	list_t *new_head;

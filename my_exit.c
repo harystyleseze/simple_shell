@@ -7,6 +7,7 @@
  *@num_byte: number of characters to copy
  *Return: concatenated character
  */
+
 char *my_strncpy(char *dest_string, char *src_string, int num_byte)
 {
 	int i, j;

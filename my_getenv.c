@@ -5,6 +5,7 @@
  * @info_struct: argument struct
  * Return: Always 0
  */
+
 char **func_get_environ(info_t *info_struct)
 {
 	if (!info_struct->environ || info_struct->env_changed)

@@ -4,6 +4,7 @@
  * func_clear_info - clear info_struct struct
  * @info_struct: address of struct
  */
+
 void func_clear_info(info_t *info_struct)
 {
 	info_struct->arg = NULL;

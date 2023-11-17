@@ -3,6 +3,7 @@
 /**
  * my_history_func - display history
  * @info_struct: argument struct
+ *
  *  Return: 0 always
  */
 int my_history_func(info_t *info_struct)

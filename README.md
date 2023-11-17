@@ -1,5 +1,5 @@
 This is a simple shell project, see below details of each tasks.
-
+This project was prepared by Harry Eze and Ugochukwu D. Ahuruonye
 
 1. Simple shell 0.1
 mandatory

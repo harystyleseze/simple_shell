@@ -8,6 +8,7 @@
  *
  * Return: bytes read
  */
+
 ssize_t func_input_buff(info_t *info_struct, char **my_buffer, size_t *len_length)
 {
 	ssize_t r = 0;

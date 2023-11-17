@@ -8,6 +8,7 @@
  *
  * Return: 1 if chain delimeter, 0 otherwise
  */
+
 int is_chain_func(info_t *info_struct, char *my_buffer, size_t *p)
 {
 	size_t j = *p;
