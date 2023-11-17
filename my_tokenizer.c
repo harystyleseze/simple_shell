@@ -18,7 +18,7 @@ char **strtow_func(char *_str, char *d)
 	if (!d)
 		d = " ";
 	for (i = 0; _str[i] != '\0'; i++)
-		if (!is_delimiter_func(_str[i], d) && (is_delimiter_func(_str[i + 1], d) || !_str[i + 1]))
+		if (!dfunc(_str[i], d) && (dfunc(_str[i + 1], d) || !_str[i + 1]))
 			numwords++;
 
 	if (numwords == 0)
@@ -28,10 +28,10 @@ char **strtow_func(char *_str, char *d)
 		return (NULL);
 	for (i = 0, j = 0; j < numwords; j++)
 	{
-		while (is_delimiter_func(_str[i], d))
+		while (dfunc(_str[i], d))
 			i++;
 		k = 0;
-		while (!is_delimiter_func(_str[i + k], d) && _str[i + k])
+		while (!dfunc(_str[i + k], d) && _str[i + k])
 			k++;
 		conv_string[j] = malloc((k + 1) * sizeof(char));
 		if (!conv_string[j])

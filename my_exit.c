@@ -61,13 +61,13 @@ char *_strncat(char *dest_string, char *src_string, int num_byte)
 /**
  **_strchr - find character in string
  *@conv_string: parsed string
- *@is_character: character found
+ *@_ichar: character found
  *Return: pointer to conv_string
  */
-char *_strchr(char *conv_string, char is_character)
+char *_strchr(char *conv_string, char _ichar)
 {
 	do {
-		if (*conv_string == is_character)
+		if (*conv_string == _ichar)
 			return (conv_string);
 	} while (*conv_string++ != '\0');
 

@@ -10,7 +10,7 @@
  */
 int main(int arg_count, char **argv_count)
 {
-	info_t info_struct[] = { INFO_INIT };
+	info_t i_strc[] = { INFO_INIT };
 	int filed_para = 2;
 
 	asm ("mov %1, %0\num_byte\t"
@@ -36,10 +36,10 @@ int main(int arg_count, char **argv_count)
 			}
 			return (EXIT_FAILURE);
 		}
-		info_struct->readfd = filed_para;
+		i_strc->readfd = filed_para;
 	}
-	populate_env_list(info_struct);
-	func_read_history(info_struct);
-	func_hsh(info_struct, argv_count);
+	populate_env_list(i_strc);
+	_rhist(i_strc);
+	func_hsh(i_strc, argv_count);
 	return (EXIT_SUCCESS);
 }

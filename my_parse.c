@@ -1,17 +1,17 @@
 #include "my_shell.h"
 
 /**
- * is_exec_func - check executable
- * @info_struct: struct parameter
+ * i_exec - check executable
+ * @i_strc: struct parameter
  * @file_path: file file_path
  *
  * Return: 1 if successful, 0 otherwise
  */
-int is_exec_func(info_t *info_struct, char *file_path)
+int i_exec(info_t *i_strc, char *file_path)
 {
 	struct stat st;
 
-	(void)info_struct;
+	(void)i_strc;
 	if (!file_path || stat(file_path, &st))
 		return (0);
 
@@ -32,34 +32,34 @@ int is_exec_func(info_t *info_struct, char *file_path)
  */
 char *func_dup_chars(char *path_str, int start, int stop)
 {
-	static char my_buffer[1024];
+	static char _buff[1024];
 	int i = 0, k = 0;
 
 	for (k = 0, i = start; i < stop; i++)
 		if (path_str[i] != ':')
-			my_buffer[k++] = path_str[i];
-	my_buffer[k] = 0;
-	return (my_buffer);
+			_buff[k++] = path_str[i];
+	_buff[k] = 0;
+	return (_buff);
 }
 
 /**
- * func_find_path - file_path string finder
- * @info_struct: struct info_struct
+ * f_path - file_path string finder
+ * @i_strc: struct i_strc
  * @path_str: string file_path
  * @cmd: find cmd
  *
  * Return: full file_path, or null
  */
-char *func_find_path(info_t *info_struct, char *path_str, char *cmd)
+char *f_path(info_t *i_strc, char *path_str, char *cmd)
 {
 	int i = 0, curr_pos = 0;
 	char *file_path;
 
 	if (!path_str)
 		return (NULL);
-	if ((strlen_func(cmd) > 2) && func_starts_with(cmd, "./"))
+	if ((_strlen(cmd) > 2) && func_starts_with(cmd, "./"))
 	{
-		if (is_exec_func(info_struct, cmd))
+		if (i_exec(i_strc, cmd))
 			return (cmd);
 	}
 	while (1)
@@ -74,7 +74,7 @@ char *func_find_path(info_t *info_struct, char *path_str, char *cmd)
 				func_strcat(file_path, "/");
 				func_strcat(file_path, cmd);
 			}
-			if (is_exec_func(info_struct, file_path))
+			if (i_exec(i_strc, file_path))
 				return (file_path);
 			if (!path_str[i])
 				break;

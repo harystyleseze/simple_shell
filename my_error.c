@@ -21,45 +21,45 @@ void my_eputs_func(char *_str)
 }
 
 /**
- * my_eputchar_func - print char is_character to stderr
- * @is_character: char
+ * my_eputchar_func - print char _ichar to stderr
+ * @_ichar: char
  *
  * Return: On success 1, otherwise -1
  */
-int my_eputchar_func(char is_character)
+int my_eputchar_func(char _ichar)
 {
 	static int i;
-	static char my_buffer[WRITE_BUF_SIZE];
+	static char _buff[WRITE_BUF_SIZE];
 
-	if (is_character == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (_ichar == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(2, my_buffer, i);
+		write(2, _buff, i);
 		i = 0;
 	}
-	if (is_character != BUF_FLUSH)
-		my_buffer[i++] = is_character;
+	if (_ichar != BUF_FLUSH)
+		_buff[i++] = _ichar;
 	return (1);
 }
 
 /**
- * func_putfd - display char is_character to stderr
- * @is_character: displayable character
+ * func_putfd - display char _ichar to stderr
+ * @_ichar: displayable character
  * @filed_para: writable description
  *
  * Return: On success 1, otherwise 0
  */
-int func_putfd(char is_character, int filed_para)
+int func_putfd(char _ichar, int filed_para)
 {
 	static int i;
-	static char my_buffer[WRITE_BUF_SIZE];
+	static char _buff[WRITE_BUF_SIZE];
 
-	if (is_character == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (_ichar == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(filed_para, my_buffer, i);
+		write(filed_para, _buff, i);
 		i = 0;
 	}
-	if (is_character != BUF_FLUSH)
-		my_buffer[i++] = is_character;
+	if (_ichar != BUF_FLUSH)
+		_buff[i++] = _ichar;
 	return (1);
 }
 

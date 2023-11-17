@@ -1,25 +1,25 @@
 #include "my_shell.h"
 
 /**
- * my_history_func - display history
- * @info_struct: argument struct
+ * _histf - display history
+ * @i_strc: argument struct
  *
  *  Return: 0 always
  */
-int my_history_func(info_t *info_struct)
+int _histf(info_t *i_strc)
 {
-	func_print_list(info_struct->history);
+	p_list(i_strc->history);
 	return (0);
 }
 
 /**
- * my_unset_alias_func - to unset alias to string
- * @info_struct: struct parameter
+ * unset_al - to unset alias to string
+ * @i_strc: struct parameter
  * @_str:  alias of the string
  *
  * Return: success 0,  error 1.
  */
-int my_unset_alias_func(info_t *info_struct, char *_str)
+int unset_al(info_t *i_strc, char *_str)
 {
 	char *null_char, conv_string;
 	int _ret;
@@ -29,20 +29,20 @@ int my_unset_alias_func(info_t *info_struct, char *_str)
 		return (1);
 	conv_string = *null_char;
 	*null_char = 0;
-	_ret = func_delete_index_node(&(info_struct->alias),
-		func_get_node_index(info_struct->alias, func_node_starts_with(info_struct->alias, _str, -1)));
+	_ret = del_index(&(i_strc->alias),
+		g_index(i_strc->alias, f_stw(i_strc->alias, _str, -1)));
 	*null_char = conv_string;
 	return (_ret);
 }
 
 /**
- * set_alias_func - function to set alias to string
- * @info_struct: parameter struct
+ * set_ali - function to set alias to string
+ * @i_strc: parameter struct
  * @_str: alias of string
  *
  * Return: on success 0, on error 1
  */
-int set_alias_func(info_t *info_struct, char *_str)
+int set_ali(info_t *i_strc, char *_str)
 {
 	char *null_char;
 
@@ -50,26 +50,26 @@ int set_alias_func(info_t *info_struct, char *_str)
 	if (!null_char)
 		return (1);
 	if (!*++null_char)
-		return (my_unset_alias_func(info_struct, _str));
+		return (unset_al(i_strc, _str));
 
-	my_unset_alias_func(info_struct, _str);
-	return (add_node_end_func(&(info_struct->alias), _str, 0) == NULL);
+	unset_al(i_strc, _str);
+	return (add_node_end_func(&(i_strc->alias), _str, 0) == NULL);
 }
 
 /**
- * _print_alias_func - print alias
- * @_is_node: _is_node of the alias
+ * p_ali - print alias
+ * @_nod: _nod of the alias
  *
  * Return: 0 upon success, otherwise 1
  */
-int _print_alias_func(list_t *_is_node)
+int p_ali(list_t *_nod)
 {
 	char *null_char = NULL, *b = NULL;
 
-	if (_is_node)
+	if (_nod)
 	{
-		null_char = _strchr(_is_node->_str, '=');
-		for (b = _is_node->_str; b <= null_char; b++)
+		null_char = _strchr(_nod->_str, '=');
+		for (b = _nod->_str; b <= null_char; b++)
 		func_putchar(*b);
 		func_putchar('\'');
 		func_puts(null_char + 1);
@@ -81,32 +81,32 @@ int _print_alias_func(list_t *_is_node)
 
 /**
  * my_alias_func - to mimic man built-in alias
- * @info_struct: argument struct
+ * @i_strc: argument struct
  *  Return: Always 0
  */
-int my_alias_func(info_t *info_struct)
+int my_alias_func(info_t *i_strc)
 {
 	int i = 0;
 	char *null_char = NULL;
-	list_t *_is_node = NULL;
+	list_t *_nod = NULL;
 
-	if (info_struct->argc == 1)
+	if (i_strc->argc == 1)
 	{
-		_is_node = info_struct->alias;
-		while (_is_node)
+		_nod = i_strc->alias;
+		while (_nod)
 		{
-			_print_alias_func(_is_node);
-			_is_node = _is_node->next;
+			p_ali(_nod);
+			_nod = _nod->next;
 		}
 		return (0);
 	}
-	for (i = 1; info_struct->argv[i]; i++)
+	for (i = 1; i_strc->argv[i]; i++)
 	{
-		null_char = _strchr(info_struct->argv[i], '=');
+		null_char = _strchr(i_strc->argv[i], '=');
 		if (null_char)
-			set_alias_func(info_struct, info_struct->argv[i]);
+			set_ali(i_strc, i_strc->argv[i]);
 		else
-			_print_alias_func(func_node_starts_with(info_struct->alias, info_struct->argv[i], '='));
+			p_ali(f_stw(i_strc->alias, i_strc->argv[i], '='));
 	}
 
 	return (0);

@@ -30,18 +30,18 @@ char *func_strcpy(char *dest_string, char *src_string)
  */
 char *func_strdup(const char *_str)
 {
-	int length_value = 0;
+	int _lval = 0;
 	char *_ret;
 
 	if (_str == NULL)
 		return (NULL);
 	while (*_str++)
-		length_value++;
-	_ret = malloc(sizeof(char) * (length_value + 1));
+		_lval++;
+	_ret = malloc(sizeof(char) * (_lval + 1));
 	if (!_ret)
 		return (NULL);
-	for (length_value++; length_value--;)
-		_ret[length_value] = *--_str;
+	for (_lval++; _lval--;)
+		_ret[_lval] = *--_str;
 	return (_ret);
 }
 
@@ -65,23 +65,23 @@ void func_puts(char *_str)
 }
 
 /**
- * func_putchar - writes the character is_character to stdout
- * @is_character: The character to print
+ * func_putchar - writes the character _ichar to stdout
+ * @_ichar: The character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int func_putchar(char is_character)
+int func_putchar(char _ichar)
 {
 	static int i;
-	static char my_buffer[WRITE_BUF_SIZE];
+	static char _buff[WRITE_BUF_SIZE];
 
-	if (is_character == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (_ichar == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(1, my_buffer, i);
+		write(1, _buff, i);
 		i = 0;
 	}
-	if (is_character != BUF_FLUSH)
-		my_buffer[i++] = is_character;
+	if (_ichar != BUF_FLUSH)
+		_buff[i++] = _ichar;
 	return (1);
 }

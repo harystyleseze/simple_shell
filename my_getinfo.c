@@ -1,75 +1,75 @@
 #include "my_shell.h"
 
 /**
- * func_clear_info - clear info_struct struct
- * @info_struct: address of struct
+ * _cinfo - clear i_strc struct
+ * @i_strc: address of struct
  */
 
-void func_clear_info(info_t *info_struct)
+void _cinfo(info_t *i_strc)
 {
-	info_struct->arg = NULL;
-	info_struct->argv = NULL;
-	info_struct->file_path = NULL;
-	info_struct->argc = 0;
+	i_strc->arg = NULL;
+	i_strc->argv = NULL;
+	i_strc->file_path = NULL;
+	i_strc->argc = 0;
 }
 
 /**
- * func_set_info - set struct
- * @info_struct: address of struct
+ * _sinfo - set struct
+ * @i_strc: address of struct
  * @argv_count: vector of argument
  */
-void func_set_info(info_t *info_struct, char **argv_count)
+void _sinfo(info_t *i_strc, char **argv_count)
 {
 	int i = 0;
 
-	info_struct->fname = argv_count[0];
-	if (info_struct->arg)
+	i_strc->fname = argv_count[0];
+	if (i_strc->arg)
 	{
-		info_struct->argv = strtow_func(info_struct->arg, " \t");
-		if (!info_struct->argv)
+		i_strc->argv = strtow_func(i_strc->arg, " \t");
+		if (!i_strc->argv)
 		{
-			info_struct->argv = malloc(sizeof(char *) * 2);
-			if (info_struct->argv)
+			i_strc->argv = malloc(sizeof(char *) * 2);
+			if (i_strc->argv)
 			{
-				info_struct->argv[0] = func_strdup(info_struct->arg);
-				info_struct->argv[1] = NULL;
+				i_strc->argv[0] = func_strdup(i_strc->arg);
+				i_strc->argv[1] = NULL;
 			}
 		}
-		for (i = 0; info_struct->argv && info_struct->argv[i]; i++)
+		for (i = 0; i_strc->argv && i_strc->argv[i]; i++)
 			;
-		info_struct->argc = i;
+		i_strc->argc = i;
 
-		func_replace_alias(info_struct);
-		func_replace_vars(info_struct);
+		rep_ali(i_strc);
+		rep_var(i_strc);
 	}
 }
 
 /**
- * func_free_info - release struct
- * @info_struct: address of struct
+ * _finfo - release struct
+ * @i_strc: address of struct
  * @all: free all
  * Return: true if successful
  */
-void func_free_info(info_t *info_struct, int all)
+void _finfo(info_t *i_strc, int all)
 {
-	func_ffree(info_struct->argv);
-	info_struct->argv = NULL;
-	info_struct->file_path = NULL;
+	func_ffree(i_strc->argv);
+	i_strc->argv = NULL;
+	i_strc->file_path = NULL;
 	if (all)
 	{
-		if (!info_struct->cmd_buf)
-			free(info_struct->arg);
-		if (info_struct->env)
-			func_free_list(&(info_struct->env));
-		if (info_struct->history)
-			func_free_list(&(info_struct->history));
-		if (info_struct->alias)
-			func_free_list(&(info_struct->alias));
-		func_ffree(info_struct->environ);
-			info_struct->environ = NULL;
-		func_bfree((void **)info_struct->cmd_buf);
-		if (info_struct->readfd > 2)
-			close(info_struct->readfd);
+		if (!i_strc->cmd_buf)
+			free(i_strc->arg);
+		if (i_strc->env)
+			func_free_list(&(i_strc->env));
+		if (i_strc->history)
+			func_free_list(&(i_strc->history));
+		if (i_strc->alias)
+			func_free_list(&(i_strc->alias));
+		func_ffree(i_strc->environ);
+			i_strc->environ = NULL;
+		func_bfree((void **)i_strc->cmd_buf);
+		if (i_strc->readfd > 2)
+			close(i_strc->readfd);
 		func_putchar(BUF_FLUSH);
 	}
 }

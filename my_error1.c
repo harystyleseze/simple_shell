@@ -30,17 +30,17 @@ int my_erratoi_func(char *conv_string)
 
 /**
  * print_error_func - print error messages
- * @info_struct: parameter struct
+ * @i_strc: parameter struct
  * @err_specif: error specifier
  * Return: 0 if non-string, -1 otherwise
  */
-void print_error_func(info_t *info_struct, char *err_specif)
+void print_error_func(info_t *i_strc, char *err_specif)
 {
-	my_eputs_func(info_struct->fname);
+	my_eputs_func(i_strc->fname);
 	my_eputs_func(": ");
-	myprint_dec(info_struct->line_count, STDERR_FILENO);
+	myprint_dec(i_strc->line_count, STDERR_FILENO);
 	my_eputs_func(": ");
-	my_eputs_func(info_struct->argv[0]);
+	my_eputs_func(i_strc->argv[0]);
 	my_eputs_func(": ");
 	my_eputs_func(err_specif);
 }
@@ -85,14 +85,14 @@ int myprint_dec(int input_par, int filed_para)
 }
 
 /**
- * func_convert_number - convert number
+ * cvt_num - convert number
  * @num_par: number parameter
  * @base_par: base_par parameter
- * @flags_arg: fag of the argument
+ * @farg: fag of the argument
  *
  * Return: the string
  */
-char *func_convert_number(long int num_par, int base_par, int flags_arg)
+char *cvt_num(long int num_par, int base_par, int farg)
 {
 	static char *array;
 	static char buffer[50];
@@ -100,13 +100,13 @@ char *func_convert_number(long int num_par, int base_par, int flags_arg)
 	char *my_ptr;
 	unsigned long num_byte = num_par;
 
-	if (!(flags_arg & CONVERT_UNSIGNED) && num_par < 0)
+	if (!(farg & CONVERT_UNSIGNED) && num_par < 0)
 	{
 		num_byte = -num_par;
 		sign_char = '-';
 
 	}
-	array = flags_arg & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	array = farg & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	my_ptr = &buffer[49];
 	*my_ptr = '\0';
 
@@ -122,18 +122,18 @@ char *func_convert_number(long int num_par, int base_par, int flags_arg)
 
 /**
  * func_remove_comments - function replace '#' with '\0'
- * @my_buffer: string modified address
+ * @_buff: string modified address
  *
  * Return: 0.
  */
-void func_remove_comments(char *my_buffer)
+void func_remove_comments(char *_buff)
 {
 	int i;
 
-	for (i = 0; my_buffer[i] != '\0'; i++)
-		if (my_buffer[i] == '#' && (!i || my_buffer[i - 1] == ' '))
+	for (i = 0; _buff[i] != '\0'; i++)
+		if (_buff[i] == '#' && (!i || _buff[i - 1] == ' '))
 		{
-			my_buffer[i] = '\0';
+			_buff[i] = '\0';
 			break;
 		}
 }

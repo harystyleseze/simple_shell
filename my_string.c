@@ -1,12 +1,12 @@
 #include "my_shell.h"
 
 /**
- * strlen_func - returns the length_value of a string
- * @conv_string: the string whose length_value to check
+ * _strlen - returns the _lval of a string
+ * @conv_string: the string whose _lval to check
  *
- * Return: integer length_value of string
+ * Return: integer _lval of string
  */
-int strlen_func(char *conv_string)
+int _strlen(char *conv_string)
 {
 	int i = 0;
 

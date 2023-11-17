@@ -1,90 +1,90 @@
 #include "my_shell.h"
 
 /**
- * func_get_environ - function to return string array
- * @info_struct: argument struct
+ * get_env - function to return string array
+ * @i_strc: argument struct
  * Return: Always 0
  */
 
-char **func_get_environ(info_t *info_struct)
+char **get_env(info_t *i_strc)
 {
-	if (!info_struct->environ || info_struct->env_changed)
+	if (!i_strc->environ || i_strc->env_changed)
 	{
-		info_struct->environ = func_list_to_strings(info_struct->env);
-		info_struct->env_changed = 0;
+		i_strc->environ = func_list_to_strings(i_strc->env);
+		i_strc->env_changed = 0;
 	}
 
-	return (info_struct->environ);
+	return (i_strc->environ);
 }
 
 /**
  * my_unsetenv_func - eliminate all env variable
- * @info_struct: argument struct
+ * @i_strc: argument struct
  *  Return: 1 on delete, 0 otherwise
  * @_varenv: string of env _varenv property
  */
-int my_unsetenv_func(info_t *info_struct, char *_varenv)
+int my_unsetenv_func(info_t *i_strc, char *_varenv)
 {
-	list_t *_is_node = info_struct->env;
+	list_t *_nod = i_strc->env;
 	size_t i = 0;
 	char *p;
 
-	if (!_is_node || !_varenv)
+	if (!_nod || !_varenv)
 		return (0);
 
-	while (_is_node)
+	while (_nod)
 	{
-		p = func_starts_with(_is_node->_str, _varenv);
+		p = func_starts_with(_nod->_str, _varenv);
 		if (p && *p == '=')
 		{
-			info_struct->env_changed = func_delete_index_node(&(info_struct->env), i);
+			i_strc->env_changed = del_index(&(i_strc->env), i);
 			i = 0;
-			_is_node = info_struct->env;
+			_nod = i_strc->env;
 			continue;
 		}
-		_is_node = _is_node->next;
+		_nod = _nod->next;
 		i++;
 	}
-	return (info_struct->env_changed);
+	return (i_strc->env_changed);
 }
 
 /**
  * _setenv_func - initialize new env _varenv
- * @info_struct: argument struct
+ * @i_strc: argument struct
  * @_varenv: string env _varenv
  * @var_string_val: var_string_val of string env _varenv
  * Return: Always 0
  */
-int _setenv_func(info_t *info_struct, char *_varenv, char *var_string_val)
+int _setenv_func(info_t *i_strc, char *_varenv, char *var_string_val)
 {
-	char *my_buffer = NULL;
-	list_t *_is_node;
+	char *_buff = NULL;
+	list_t *_nod;
 	char *p;
 
 	if (!_varenv || !var_string_val)
 		return (0);
 
-	my_buffer = malloc(strlen_func(_varenv) + strlen_func(var_string_val) + 2);
-	if (!my_buffer)
+	_buff = malloc(_strlen(_varenv) + _strlen(var_string_val) + 2);
+	if (!_buff)
 		return (1);
-	func_strcpy(my_buffer, _varenv);
-	func_strcat(my_buffer, "=");
-	func_strcat(my_buffer, var_string_val);
-	_is_node = info_struct->env;
-	while (_is_node)
+	func_strcpy(_buff, _varenv);
+	func_strcat(_buff, "=");
+	func_strcat(_buff, var_string_val);
+	_nod = i_strc->env;
+	while (_nod)
 	{
-		p = func_starts_with(_is_node->_str, _varenv);
+		p = func_starts_with(_nod->_str, _varenv);
 		if (p && *p == '=')
 		{
-			free(_is_node->_str);
-			_is_node->_str = my_buffer;
-			info_struct->env_changed = 1;
+			free(_nod->_str);
+			_nod->_str = _buff;
+			i_strc->env_changed = 1;
 			return (0);
 		}
-		_is_node = _is_node->next;
+		_nod = _nod->next;
 	}
-	add_node_end_func(&(info_struct->env), my_buffer, 0);
-	free(my_buffer);
-	info_struct->env_changed = 1;
+	add_node_end_func(&(i_strc->env), _buff, 0);
+	free(_buff);
+	i_strc->env_changed = 1;
 	return (0);
 }

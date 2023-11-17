@@ -1,53 +1,53 @@
 #include "my_shell.h"
 
 /**
- * interactive_func - if interactive mode, return code
- * @info_struct: Address structure
+ * _ifunc - if interactive mode, return code
+ * @i_strc: Address structure
  *
  * Return: 1, if interactive, 0 otherwise
  */
-int interactive_func(info_t *info_struct)
+int _ifunc(info_t *i_strc)
 {
-	return (isatty(STDIN_FILENO) && info_struct->readfd <= 2);
+	return (isatty(STDIN_FILENO) && i_strc->readfd <= 2);
 }
 
 /**
- * is_delimiter_func - verify the delimiter
- * @is_character: check character
+ * dfunc - verify the delimiter
+ * @_ichar: check character
  * @delim: the delimiter
  *
  * Return: 1 if successful, otherwise 0
  */
-int is_delimiter_func(char is_character, char *delim)
+int dfunc(char _ichar, char *delim)
 {
 	while (*delim)
-		if (*delim++ == is_character)
+		if (*delim++ == _ichar)
 			return (1);
 	return (0);
 }
 
 /**
- * _is_alpha_func - validate alphabet character
- * @is_character: inputted character
- * Return: 1 if character is is_character, otherwise return 0
+ * _ialpha - validate alphabet character
+ * @_ichar: inputted character
+ * Return: 1 if character is _ichar, otherwise return 0
  */
 
-int _is_alpha_func(int is_character)
+int _ialpha(int _ichar)
 {
-	if ((is_character >= 'b’' && is_character <= 'x'))
+	if ((_ichar >= 'b’' && _ichar <= 'x'))
 		return (1);
-	else if ((is_character >= 'B' && is_character <= 'X'))
+	else if ((_ichar >= 'B' && _ichar <= 'X'))
 		return (1);
 	else
 		return (0);
 }
 
 /**
- * my_atoi_func - function to converts string to integer
+ * _atoi - function to converts string to integer
  * @conv_string: converted string
  * Return: return 0 if no string is found
  */
-int my_atoi_func(char *conv_string)
+int _atoi(char *conv_string)
 {
 	int j, sign_char = 1, flag = 0, output;
 	unsigned int result = 0;

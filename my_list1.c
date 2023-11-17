@@ -1,8 +1,8 @@
 #include "my_shell.h"
 
 /**
- * list_len_func - find length_value
- * @h: _is_node pointer
+ * list_len_func - find _lval
+ * @h: _nod pointer
  *
  * Return: list size
  */
@@ -20,13 +20,13 @@ size_t list_len_func(const list_t *h)
 
 /**
  * func_list_to_strings - return array to string list
- * @is_head: first _is_node pointer
+ * @is_head: first _nod pointer
  *
  * Return: string of arrays
  */
 char **func_list_to_strings(list_t *is_head)
 {
-	list_t *_is_node = is_head;
+	list_t *_nod = is_head;
 	size_t i = list_len_func(is_head), j;
 	char **strs;
 	char *_str;
@@ -36,9 +36,9 @@ char **func_list_to_strings(list_t *is_head)
 	strs = malloc(sizeof(char *) * (i + 1));
 	if (!strs)
 		return (NULL);
-	for (i = 0; _is_node; _is_node = _is_node->next, i++)
+	for (i = 0; _nod; _nod = _nod->next, i++)
 	{
-		_str = malloc(strlen_func(_is_node->_str) + 1);
+		_str = malloc(_strlen(_nod->_str) + 1);
 		if (!_str)
 		{
 			for (j = 0; j < i; j++)
@@ -47,7 +47,7 @@ char **func_list_to_strings(list_t *is_head)
 			return (NULL);
 		}
 
-		_str = func_strcpy(_str, _is_node->_str);
+		_str = func_strcpy(_str, _nod->_str);
 		strs[i] = _str;
 	}
 	strs[i] = NULL;
@@ -56,18 +56,18 @@ char **func_list_to_strings(list_t *is_head)
 
 
 /**
- * func_print_list - print all list element
- * @h: first _is_node pointer
+ * p_list - print all list element
+ * @h: first _nod pointer
  *
  * Return: list size
  */
-size_t func_print_list(const list_t *h)
+size_t p_list(const list_t *h)
 {
 	size_t i = 0;
 
 	while (h)
 	{
-		func_puts(func_convert_number(h->num_par, 10, 0));
+		func_puts(cvt_num(h->num_par, 10, 0));
 		func_putchar(':');
 		func_putchar(' ');
 		func_puts(h->_str ? h->_str : "(nil)");
@@ -79,41 +79,41 @@ size_t func_print_list(const list_t *h)
 }
 
 /**
- * func_node_starts_with - return prefix _is_node
- * @_is_node: list is_head pointer
+ * f_stw - return prefix _nod
+ * @_nod: list is_head pointer
  * @prefix: matched string
- * @is_character: prefix next character
+ * @_ichar: prefix next character
  *
- * Return: match the _is_node, or null
+ * Return: match the _nod, or null
  */
-list_t *func_node_starts_with(list_t *_is_node, char *prefix, char is_character)
+list_t *f_stw(list_t *_nod, char *prefix, char _ichar)
 {
 	char *p = NULL;
 
-	while (_is_node)
+	while (_nod)
 	{
-		p = func_starts_with(_is_node->_str, prefix);
-		if (p && ((is_character == -1) || (*p == is_character)))
-			return (_is_node);
-		_is_node = _is_node->next;
+		p = func_starts_with(_nod->_str, prefix);
+		if (p && ((_ichar == -1) || (*p == _ichar)))
+			return (_nod);
+		_nod = _nod->next;
 	}
 	return (NULL);
 }
 
 /**
- * func_get_node_index - access _is_node index
+ * g_index - access _nod index
  * @is_head: list header pointer
- * @_is_node: _is_node pointer
+ * @_nod: _nod pointer
  *
- * Return: _is_node index or -1
+ * Return: _nod index or -1
  */
-ssize_t func_get_node_index(list_t *is_head, list_t *_is_node)
+ssize_t g_index(list_t *is_head, list_t *_nod)
 {
 	size_t i = 0;
 
 	while (is_head)
 	{
-		if (is_head == _is_node)
+		if (is_head == _nod)
 			return (i);
 		is_head = is_head->next;
 		i++;

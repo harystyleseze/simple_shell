@@ -1,34 +1,34 @@
 #include "my_shell.h"
 
 /**
- * is_chain_func - test current char
- * @info_struct: the parameter struct
- * @my_buffer: the char buffer
- * @p: address of current position in my_buffer
+ * i_chn - test current char
+ * @i_strc: the parameter struct
+ * @_buff: the char buffer
+ * @p: address of current position in _buff
  *
  * Return: 1 if chain delimeter, 0 otherwise
  */
 
-int is_chain_func(info_t *info_struct, char *my_buffer, size_t *p)
+int i_chn(info_t *i_strc, char *_buff, size_t *p)
 {
 	size_t j = *p;
 
-	if (my_buffer[j] == '|' && my_buffer[j + 1] == '|')
+	if (_buff[j] == '|' && _buff[j + 1] == '|')
 	{
-		my_buffer[j] = 0;
+		_buff[j] = 0;
 		j++;
-		info_struct->cmd_buf_type = CMD_OR;
+		i_strc->buff_typ = CMD_OR;
 	}
-	else if (my_buffer[j] == '&' && my_buffer[j + 1] == '&')
+	else if (_buff[j] == '&' && _buff[j + 1] == '&')
 	{
-		my_buffer[j] = 0;
+		_buff[j] = 0;
 		j++;
-		info_struct->cmd_buf_type = CMD_AND;
+		i_strc->buff_typ = CMD_AND;
 	}
-	else if (my_buffer[j] == ';')
+	else if (_buff[j] == ';')
 	{
-		my_buffer[j] = 0;
-		info_struct->cmd_buf_type = CMD_CHAIN;
+		_buff[j] = 0;
+		i_strc->buff_typ = CMD_CHAIN;
 	}
 	else
 		return (0);
@@ -37,33 +37,33 @@ int is_chain_func(info_t *info_struct, char *my_buffer, size_t *p)
 }
 
 /**
- * func_check_chain - checks chaining based on last status
- * @info_struct: the parameter struct
- * @my_buffer: the char buffer
- * @p: address of current position in my_buffer
- * @i: starting position in my_buffer
- * @len_length: length_value of my_buffer
+ * c_chn - checks chaining based on last status
+ * @i_strc: the parameter struct
+ * @_buff: the char buffer
+ * @p: address of current position in _buff
+ * @i: starting position in _buff
+ * @l_len: _lval of _buff
  *
  * Return: Void
  */
-void func_check_chain(info_t *info_struct, char *my_buffer, size_t *p, size_t i, size_t len_length)
+void c_chn(info_t *i_strc, char *_buff, size_t *p, size_t i, size_t l_len)
 {
 	size_t j = *p;
 
-	if (info_struct->cmd_buf_type == CMD_AND)
+	if (i_strc->buff_typ == CMD_AND)
 	{
-		if (info_struct->status)
+		if (i_strc->status)
 		{
-			my_buffer[i] = 0;
-			j = len_length;
+			_buff[i] = 0;
+			j = l_len;
 		}
 	}
-	if (info_struct->cmd_buf_type == CMD_OR)
+	if (i_strc->buff_typ == CMD_OR)
 	{
-		if (!info_struct->status)
+		if (!i_strc->status)
 		{
-			my_buffer[i] = 0;
-			j = len_length;
+			_buff[i] = 0;
+			j = l_len;
 		}
 	}
 
@@ -71,83 +71,83 @@ void func_check_chain(info_t *info_struct, char *my_buffer, size_t *p, size_t i,
 }
 
 /**
- * func_replace_alias - replaces an aliases in the tokenized string
- * @info_struct: the parameter struct
+ * rep_ali - replaces an aliases in the tokenized string
+ * @i_strc: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int func_replace_alias(info_t *info_struct)
+int rep_ali(info_t *i_strc)
 {
 	int i;
-	list_t *_is_node;
+	list_t *_nod;
 	char *p;
 
 	for (i = 0; i < 10; i++)
 	{
-		_is_node = func_node_starts_with(info_struct->alias, info_struct->argv[0], '=');
-		if (!_is_node)
+		_nod = f_stw(i_strc->alias, i_strc->argv[0], '=');
+		if (!_nod)
 			return (0);
-		free(info_struct->argv[0]);
-		p = _strchr(_is_node->_str, '=');
+		free(i_strc->argv[0]);
+		p = _strchr(_nod->_str, '=');
 		if (!p)
 			return (0);
 		p = func_strdup(p + 1);
 		if (!p)
 			return (0);
-		info_struct->argv[0] = p;
+		i_strc->argv[0] = p;
 	}
 	return (1);
 }
 
 /**
- * func_replace_vars - replaces vars in the tokenized string
- * @info_struct: the parameter struct
+ * rep_var - replaces vars in the tokenized string
+ * @i_strc: the parameter struct
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int func_replace_vars(info_t *info_struct)
+int rep_var(info_t *i_strc)
 {
 	int i = 0;
-	list_t *_is_node;
+	list_t *_nod;
 
-	for (i = 0; info_struct->argv[i]; i++)
+	for (i = 0; i_strc->argv[i]; i++)
 	{
-		if (info_struct->argv[i][0] != '$' || !info_struct->argv[i][1])
+		if (i_strc->argv[i][0] != '$' || !i_strc->argv[i][1])
 			continue;
 
-		if (!func__strcmp(info_struct->argv[i], "$?"))
+		if (!func__strcmp(i_strc->argv[i], "$?"))
 		{
-			replace_string_func(&(info_struct->argv[i]),
-					func_strdup(func_convert_number(info_struct->status, 10, 0)));
+			rep_str(&(i_strc->argv[i]),
+					func_strdup(cvt_num(i_strc->status, 10, 0)));
 			continue;
 		}
-		if (!func__strcmp(info_struct->argv[i], "$$"))
+		if (!func__strcmp(i_strc->argv[i], "$$"))
 		{
-			replace_string_func(&(info_struct->argv[i]),
-					func_strdup(func_convert_number(getpid(), 10, 0)));
+			rep_str(&(i_strc->argv[i]),
+					func_strdup(cvt_num(getpid(), 10, 0)));
 			continue;
 		}
-		_is_node = func_node_starts_with(info_struct->env, &info_struct->argv[i][1], '=');
-		if (_is_node)
+		_nod = f_stw(i_strc->env, &i_strc->argv[i][1], '=');
+		if (_nod)
 		{
-			replace_string_func(&(info_struct->argv[i]),
-					func_strdup(_strchr(_is_node->_str, '=') + 1));
+			rep_str(&(i_strc->argv[i]),
+					func_strdup(_strchr(_nod->_str, '=') + 1));
 			continue;
 		}
-		replace_string_func(&info_struct->argv[i], func_strdup(""));
+		rep_str(&i_strc->argv[i], func_strdup(""));
 
 	}
 	return (0);
 }
 
 /**
- * replace_string_func - replaces string
+ * rep_str - replaces string
  * @old: address of old string
  * @new: new string
  *
  * Return: 1 if replaced, 0 otherwise
  */
-int replace_string_func(char **old, char *new)
+int rep_str(char **old, char *new)
 {
 	free(*old);
 	*old = new;
