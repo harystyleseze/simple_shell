@@ -27,7 +27,6 @@ int my_exit_func(info_t *info_struct)
 	info_struct->err_num = -1;
 	return (-2);
 }
-
 /**
  * my_cd_func - change current directory
  * @info_struct: Argument struct
@@ -45,7 +44,7 @@ int my_cd_func(info_t *info_struct)
 	{
 		dir = get_env_func(info_struct, "HOME=");
 		if (!dir)
-			chdir_ret = /* TODO: what should this be? */
+			chdir_ret =
 				chdir((dir = get_env_func(info_struct, "PWD=")) ? dir : "/");
 		else
 			chdir_ret = chdir(dir);
@@ -59,7 +58,7 @@ int my_cd_func(info_t *info_struct)
 			return (1);
 		}
 		func_puts(get_env_func(info_struct, "OLDPWD=")), func_putchar('\num_byte');
-		chdir_ret = /* TODO: what should this be? */
+		chdir_ret =
 			chdir((dir = get_env_func(info_struct, "OLDPWD=")) ? dir : "/");
 	}
 	else
@@ -76,7 +75,6 @@ int my_cd_func(info_t *info_struct)
 	}
 	return (0);
 }
-
 /**
  * my_help_func - function for help call
  * @info_struct: Argument struct
@@ -89,6 +87,6 @@ int my_help_func(info_t *info_struct)
 	arg_array = info_struct->argv;
 	func_puts("help call works. Function not yet implemented \num_byte");
 	if (0)
-		func_puts(*arg_array); /* temp att_unused workaround */
+		func_puts(*arg_array);
 	return (0);
 }

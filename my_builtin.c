@@ -26,8 +26,8 @@ int my_unset_alias_func(info_t *info_struct, char *_str)
 	null_char = _strchr(_str, '=');
 	if (!null_char)
 		return (1);
-	conv_string= *null_char;
-	* null_char= 0;
+	conv_string = *null_char;
+	*null_char = 0;
 	_ret = func_delete_index_node(&(info_struct->alias),
 		func_get_node_index(info_struct->alias, func_node_starts_with(info_struct->alias, _str, -1)));
 	*null_char = conv_string;
@@ -68,7 +68,7 @@ int _print_alias_func(list_t *_is_node)
 	if (_is_node)
 	{
 		null_char = _strchr(_is_node->_str, '=');
-		for (b = _is_node->_str; b<= null_char; b++)
+		for (b = _is_node->_str; b <= null_char; b++)
 		func_putchar(*b);
 		func_putchar('\'');
 		func_puts(null_char + 1);

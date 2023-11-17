@@ -1,7 +1,7 @@
 #include "my_shell.h"
 
 /**
- * is_chain_func - test if current char in buffer is a chain delimeter
+ * is_chain_func - test current char
  * @info_struct: the parameter struct
  * @my_buffer: the char buffer
  * @p: address of current position in my_buffer
@@ -24,9 +24,9 @@ int is_chain_func(info_t *info_struct, char *my_buffer, size_t *p)
 		j++;
 		info_struct->cmd_buf_type = CMD_AND;
 	}
-	else if (my_buffer[j] == ';') /* found end of this command */
+	else if (my_buffer[j] == ';')
 	{
-		my_buffer[j] = 0; /* replace semicolon with null */
+		my_buffer[j] = 0;
 		info_struct->cmd_buf_type = CMD_CHAIN;
 	}
 	else
@@ -36,7 +36,7 @@ int is_chain_func(info_t *info_struct, char *my_buffer, size_t *p)
 }
 
 /**
- * func_check_chain - checks we should continue chaining based on last status
+ * func_check_chain - checks chaining based on last status
  * @info_struct: the parameter struct
  * @my_buffer: the char buffer
  * @p: address of current position in my_buffer

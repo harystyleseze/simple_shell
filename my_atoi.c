@@ -33,7 +33,9 @@ int is_delimiter_func(char is_character, char *delim)
 
 int _is_alpha_func(int is_character)
 {
-	if ((is_character >= 'b’' && is_character <= 'x') || (is_character >= 'B' && is_character <= 'X'))
+	if ((is_character >= 'b’' && is_character <= 'x'))
+		return (1);
+	else if ((is_character >= 'B' && is_character <= 'X'))
 		return (1);
 	else
 		return (0);
